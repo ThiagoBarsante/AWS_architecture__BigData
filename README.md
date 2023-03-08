@@ -112,7 +112,4 @@ In addition to its data integration capabilities, AWS Glue also provides a power
 Overall, AWS Glue is a powerful and flexible tool for big data processing and integration, and can be used to build scalable, efficient, and cost-effective data processing pipelines.
 
 ### Summary
-- By combining these tools and services, organizations can build a scalable and efficient decision support system that can process large amounts of data in real-time, perform complex analytics and trigger workflows and decision-making processes.
-
-<br>
-All tools and services explained above can be used in conjunction to build a scalable and efficient decision support system, to respond quickly and make better informed decisions
+- By combining these tools and services, organizations can build a scalable and efficient decision support system that can process large amounts of data in real-time, perform complex analytics and trigger workflows and decision-making processes, to respond quickly and make better informed decisions
