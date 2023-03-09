@@ -6,19 +6,19 @@ The evolution of <b> decision support systems (DSS) </b> has been driven by adva
 
 - <b>MPPs</b> involve dividing large data sets into smaller pieces and processing them simultaneously across multiple processors or nodes, allowing for faster data processing and analysis. This technology allows for complex queries, processess and analytics to be performed on vast amounts of data in real-time.
 
-- <b>Data lakes</b>, on the other hand, are large repositories of raw data that are stored in their native format, making it easier to access and analyze. Data lakes are used to store both structured and unstructured data, making it an ideal storage solution for big data applications. DSS can access data stored in a data lake and use MPP technology to process it, allowing for faster decision-making.
+- <b>Data lakes</b>, on the other hand, are large repositories of raw data that are stored in their native format, filtered, cleaned and augmented data with business-level aggregates data also, making it easier to access and analyze. Data lakes are used to store both structured and unstructured data, making it an ideal storage solution for big data applications. DSS can access data stored in a data lake and use MPP technology to process it, allowing for faster decision-making.
 
-Together, MPPs and data lakes have revolutionized the field of DSS by enabling faster, more accurate decision-making based on vast amounts of data. DSS can now provide insights and recommendations in real-time, enabling organizations to respond quickly to changing market conditions and make more informed decisions.
+Together, MPPs and data lakes have revolutionized the field of DSS along with data engineering, data warehousing, analytics, data science and machine learning by enabling faster, more accurate decision-making based on vast amounts of data. All pieces together can now provide insights and recommendations, enabling organizations and relevant stakeholders to respond quickly to changing market conditions and make more informed decisions.
 
 ### AWS Architecture example to process Big Data
-![imgAws](./doc/img/Aws-architecture_BigData.png)
+![imgAws](./doc/img/Aws-architecture_BigData-v2.png)
 
 - Some notes of AWS tools and services
 
 #### AWS S3 (Simple Storage Service)
 AWS S3 (Simple Storage Service) is a scalable, secure, and durable object storage service that can be used as a data lake to store and retrieve large volumes of data. In a decision support system architecture, AWS S3 is often used as a central storage repository for raw data, which can then be accessed and analyzed by other services such as EMR, Athena, or Redshift.
 
-Here's how AWS S3 fits into a typical decision support system architecture:
+Here's how AWS S3 fits into a typical big data architecture:
 
 Data ingestion: Raw data is ingested from various sources such as sensors, logs, or databases and stored in S3 buckets.
 
@@ -81,8 +81,20 @@ EMR provides a variety of security features, including network isolation, encryp
 Overall, EMR is a powerful and flexible big data processing service that simplifies the process of processing and analyzing large amounts of data using popular big data frameworks and tools.
 
 #### Athena
-Athena </b> is a serverless, interactive query service that allows users to analyze data stored in Amazon S3 using SQL. Athena uses a distributed query engine that automatically parallelizes queries across multiple nodes in a cluster to provide fast and efficient data processing. This means that Athena can process large volumes of data in parallel, making it an MPP technology.
-- Since the end of 2022 / 2023 - Amazon Athena also support interactive Spark Jobs
+Athena </b> is a serverless, interactive query service that allows users to analyze data stored in Amazon S3 using SQL. Athena uses a distributed query engine that automatically parallelizes queries across multiple nodes in a cluster to provide fast and efficient data processing. This means that Athena can process large volumes of data in parallel.
+- Since the end of 2022 - Amazon Athena also support interactive Spark Jobs
+
+Some of the key features of Athena also include:
+
+Easy setup and management: Athena is a fully managed service that requires no infrastructure setup or administration. Users can simply create a table, define the schema, and start querying the data.
+
+Standard SQL support: Athena supports standard SQL syntax, making it easy for users familiar with SQL to write and execute queries.
+
+Cost-effective: Athena is a pay-per-query service, which means users only pay for the queries they run. There are no upfront costs or ongoing commitments.
+
+Scalability: Athena is designed to handle large datasets and can scale automatically to accommodate growing data volumes.
+
+Integration with other AWS services: Athena integrates with other AWS services like Glue, which can automate the process of defining and managing schemas for data stored in S3.
 
 #### Redshift
 Similarly, <b> Amazon Redshift </b> is a cloud-based data warehousing solution that uses a columnar storage format and a distributed query engine to support high-performance SQL-based analytics. Redshift uses massively parallel processing to process large volumes of data quickly and efficiently, with the ability to scale up to petabyte-scale data warehousing. Redshift also supports parallel data loading and unloading, which further enhances its MPP capabilities.
