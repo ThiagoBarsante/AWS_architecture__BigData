@@ -46,20 +46,20 @@ After all process executed the results are
 ### CLV by Customer
 
 
-![imgAws1](./img/Sample_CLV-Screenshot 2023-03-11 173250.png)
+![imgAws1](./img/Sample_CLV.png)
 
 
 ###### Percent distribution, CLV vs Monetary Value
 
 
 
-![imgAws2](./img/Percent-distribution-AVG-CLV-by-Cluster-Screenshot 2023-03-11 173318.png)
+![imgAws2](./img/Percent-distribution-AVG-CLV.png)
 
-![imgAws3](./img/Chart-AVG-CLV-Screenshot 2023-03-11 173404.png)
+![imgAws3](./img/Chart-AVG-CLV.png)
 
 
 ###### Machine Learning model used to create cluster associated um revenue (monetary value)
 Info - ML model with prediction confidence of 91.70%
 
 
-![imgAws4](./img/ML-Cluster-Model-OnlineRetail-Screenshot 2023-03-10 222300.png)
+![imgAws4](./img/ML-Cluster-Model.png)
