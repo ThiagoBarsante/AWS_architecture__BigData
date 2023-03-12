@@ -46,20 +46,20 @@ After all process executed the results are
 ### CLV by Customer
 
 
-![Sample_CLV-Screenshot 2023-03-11 173250.png](../_resources/d2d82655d793412d8d5f21bbc429b1d0.png)
+![imgAws1](./img/Sample_CLV-Screenshot 2023-03-11 173250.png)
 
 
 ###### Percent distribution, CLV vs Monetary Value
 
 
 
-![Percent-distribution-AVG-CLV-by-Cluster-Screenshot 2023-03-11 173318.png](../_resources/ec95dea411934a7c921185b8a8a0a5a9.png)
+![imgAws2](./img/Percent-distribution-AVG-CLV-by-Cluster-Screenshot 2023-03-11 173318.png)
 
-![Chart-AVG-CLV-Screenshot 2023-03-11 173404.png](../_resources/57da7628f2c5456487640d51fe190e4e.png)
+![imgAws3](./img/Chart-AVG-CLV-Screenshot 2023-03-11 173404.png)
 
 
 ###### Machine Learning model used to create cluster associated um revenue (monetary value)
 Info - ML model with prediction confidence of 91.70%
 
 
-![ML-Cluster-Model-OnlineRetail-Screenshot 2023-03-10 222300.png](../_resources/15805c4ab6c64f9f9add5b72c4f32a5d.png)
+![imgAws4](./img/ML-Cluster-Model-OnlineRetail-Screenshot 2023-03-10 222300.png)
