@@ -47,7 +47,7 @@ After all process executed the results are
 
 ###### Percent distribution, CLV vs Monetary Value
 
-![imgAws2](./img/Percent-distribution-AVG-CLV.png)
+![imgAws2](./img/Percent-distribution-AVG-CLV-v2.png)
 
 
 ![imgAws3](./img/CLV_MV_v2.png)
