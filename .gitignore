@@ -1,0 +1,5 @@
+
+## Remove notebooks and .txt and tmp files
+*.txt
+TMP_README.ipynb
+/TMP_DIR/

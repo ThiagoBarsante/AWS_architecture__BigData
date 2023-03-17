@@ -1,7 +1,3 @@
-README
-
-Readme.md
-
 ## Customer Value
 
 <b> CLV stands for "Customer Lifetime Value".</b> It refers to the amount of money that a customer is expected to spend on a company's products or services over the entire duration of their relationship with the company.
@@ -51,15 +47,14 @@ After all process executed the results are
 
 ###### Percent distribution, CLV vs Monetary Value
 
-
-
 ![imgAws2](./img/Percent-distribution-AVG-CLV.png)
 
-![imgAws3](./img/Chart-AVG-CLV.png)
+
+![imgAws3](./img/CLV_MV_v2.png)
+
+### Quick Note
+<b> Machine Learning model to build clusters of customers associated with the FRM solution </b> can also provide insights for sales and marketing optimizations campaigns. 
+- ML model with prediction confidence of 91.70%
 
 
-###### Machine Learning model used to create cluster associated um revenue (monetary value)
-Info - ML model with prediction confidence of 91.70%
-
-
-![imgAws4](./img/ML-Cluster-Model.png)
+![imgAws4](./img/ML-Cluster-Model-v2.png)
