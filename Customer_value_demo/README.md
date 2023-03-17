@@ -37,12 +37,19 @@ To calculate CLV using this formula, you will need to estimate the inputs for ea
 
 Let´s come back to CLV using FRM (Frequency, Recency, and Monetary Value) to present the solution
 
+- CLV formula : (monetary_value / frequency) * (1 - ((recency_dt + 1) / 365)) / (1 + discount_rate = 0.1 = 10%) )
+
+Os. The recency_now column show execution on 2023-03-12. The execution to calculate CLV use recency_dt that is 2011-12-09. 
+- Detailed source code at bin/ directory
+
 After all process executed the results are
 
 ### CLV by Customer
 
 
 ![imgAws1](./img/Sample_CLV.png)
+
+![imgRency](./img/Recency-comment.png)
 
 
 ###### Percent distribution, CLV vs Monetary Value
