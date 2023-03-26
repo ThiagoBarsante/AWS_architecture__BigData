@@ -2,13 +2,14 @@
 
 ### Introduction
 
-The evolution of <b> decision support systems (DSS) </b> has been driven by advancements in technology and the growing need to process large volumes of data quickly and efficiently. Two significant advancements that have enabled this evolution are MPPs (massively parallel processing) and data lakes.
+The evolution of <b> decision support systems (DSS) </b>  has been largely shaped by advancements in technology and the growing need to process vast amounts of data quickly and efficiently. Store, manage and process <b>Big Data</b>. Among the most significant advancements that have enabled this evolution are massively parallel processing (MPPs) and data lakes. These technologies have facilitated the development of DSS that are more powerful and effective than ever before, allowing businesses to harness the power of big data to drive their decision-making processes. As a result, the concept of <b> Enterprise Intelligence </b> has emerged, which refers to the comprehensive use of data and analytics to gain insights that can inform strategic decision-making across an organization.
 
-- <b>MPPs</b> involve dividing large data sets into smaller pieces and processing them simultaneously across multiple processors or nodes, allowing for faster data processing and analysis. This technology allows for complex queries, processess and analytics to be performed on vast amounts of data in real-time.
+- <b>MPPs</b> involve dividing large data sets into smaller pieces and processing them simultaneously across multiple processors or nodes, allowing for faster data processing and analysis. This technology allows for complex queries, processess and analytics to be performed on vast amounts of data.
+<br>
 
-- <b>Data lakes</b>, on the other hand, are large repositories of raw data that are stored in their native format, filtered, cleaned and augmented data with business-level aggregates data also, making it easier to access and analyze. Data lakes are used to store both structured and unstructured data, making it an ideal storage solution for big data applications. DSS can access data stored in a data lake and use MPP technology to process it, allowing for faster decision-making.
+- <b>Data lakes</b>, on the other hand, are large repositories of raw data that are stored in their native format, filtered, cleaned and augmented data with business-level aggregates data also, making it easier to access and analyze. Data lakes are used to store both structured and unstructured data, making it an ideal storage solution for big data applications.
 
-Together, MPPs and data lakes have revolutionized the field of DSS along with data engineering, data warehousing, analytics, data science and machine learning by enabling faster, more accurate decision-making based on vast amounts of data. All pieces together can now provide insights and recommendations, enabling organizations and relevant stakeholders to respond quickly to changing market conditions and make more informed decisions.
+All the pieces together, these advancements enable the organizations and relevant stakeholders to respond rapidly to changing market conditions and make data-driven, informed decisions.
 
 ### AWS Architecture example to process Big Data
 ![imgAws](./doc/img/Aws-architecture_BigData-v2.png)

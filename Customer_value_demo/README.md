@@ -16,7 +16,9 @@ Monetary Value: This represents how much a customer spends on each purchase. Cus
 
 Using these three factors (FRM), businesses can segment their customers into groups based on their purchase behavior. For example, customers who make frequent purchases, have made a purchase recently, and spend a lot per purchase would be considered high-value customers.
 
-<b> Here's an example of how to implement the FRM using in Spark - PySpark with customer purchase history data </b> : link to notebook
+<b> Here's an example of how to implement the FRM using in Spark - PySpark with customer purchase history </b> 
+[Click here to open EMR sample notebook](./bin/customer_value_emr_cluster_execution_sample.ipynb)
+
 - Spark could run this solution with millions of customers and billions of revenue transactions, for companies such as Amazon, Wall Wart and Alibaba without code change
 
 The output of PySpark code will be the CLV for each customer ID. Note that the CLV calculation is based on the assumptions and simplifications made in the code, so the results should be taken as estimates and not definitive values.
@@ -39,7 +41,7 @@ Let´s come back to CLV using FRM (Frequency, Recency, and Monetary Value) to pr
 
 - CLV formula : (monetary_value / frequency) * (1 - ((recency_dt + 1) / 365)) / (1 + discount_rate = 0.1 = 10%) )
 
-Os. The recency_now column show execution on 2023-03-12. The execution to calculate CLV use recency_dt that is 2011-12-09. 
+Note: The recency_now column show execution on 2023-03-25. The execution to calculate CLV use recency_dt that is 2011-12-09 (latest invoice date). 
 - Detailed source code at bin/ directory
 
 After all process executed the results are
@@ -47,21 +49,28 @@ After all process executed the results are
 ### CLV by Customer
 
 
-![imgAws1](./img/Sample_CLV.png)
+![imgAws1](./img/Sample_CLV-img.png)
 
-![imgRency](./img/Recency-comment.png)
-
+![imgRency](./img/Recency-comment-img.png)
 
 ###### Percent distribution, CLV vs Monetary Value
 
-![imgAws2](./img/Percent-distribution-AVG-CLV-v2.png)
+![imgAws2](./img/Percent-distribution-AVG-img.png)
 
 
-![imgAws3](./img/CLV_MV_v2.png)
+![imgAws3](./img/CLV_MV-img.png)
 
 ### Quick Note
 <b> Machine Learning model to build clusters of customers associated with the FRM solution </b> can also provide insights for sales and marketing optimizations campaigns. 
-- ML model with prediction confidence of 91.70%
+- ML model with prediction confidence of 95.8%
 
 
-![imgAws4](./img/ML-Cluster-Model-v2.png)
+![imgAws4](./img/ML_Cluster_Model-img.png)
+
+
+### Agenda em project solution
+![clv_1_Agenda-Customer-value](./img/clv_1_Agenda-Customer-value.png)
+
+###### Notes
+- All code and documents are available under bin/, HTML viewer and doc/ directories 
+- bin/ directory also have code with examples using Athena Spark Job and local execution

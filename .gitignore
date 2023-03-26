@@ -3,3 +3,9 @@
 *.txt
 TMP_README.ipynb
 /TMP_DIR/
+
+*TMP_README.html*
+*ipynb_checkpoints/*
+
+.ipynb_checkpoints/
+Customer_value_demo/.ipynb_checkpoints/*
