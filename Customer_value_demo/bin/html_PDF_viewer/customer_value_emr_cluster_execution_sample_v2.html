@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>customer_value_emr_cluster_execution_sample</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>customer_value_emr_cluster_execution_sample_v2</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -15044,10 +15044,10 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">input_location</span> <span class="o">=</span> <span class="s1">&#39;../s3_data/input/&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">input_location</span> <span class="o">=</span> <span class="s1">&#39;s3://S3_BUCKET_NAME/&#39;</span>
 </pre></div>
 
      </div>
@@ -15060,10 +15060,15 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s3_filename</span> <span class="o">=</span> <span class="n">input_location</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># s3_bucket = &#39;s3://S3_BUCKET_NAME/&#39;</span>
+<span class="c1"># parquet_file_name = &#39;S3_NAME_DIR/data_input/OnlineRetail__AWS.parquet&#39;</span>
+
+<span class="c1"># s3_filename = s3_bucket + parquet_file_name</span>
+
+<span class="n">s3_filename</span> <span class="o">=</span> <span class="n">input_location</span>
 <span class="n">s3_filename</span>
 </pre></div>
 
@@ -15082,13 +15087,13 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&#39;../s3_data/input/&#39;</pre>
+<pre>&#39;s3://S3_BUCKET_NAME/&#39;</pre>
 </div>
 
 </div>
