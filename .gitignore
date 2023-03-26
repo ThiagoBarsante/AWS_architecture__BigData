@@ -1,11 +1,12 @@
 
+### Remove directories TMP/
+/TMP_DIR/
+Customer_value_demo/TMP_DIR/
+
 ## Remove notebooks and .txt and tmp files
 *.txt
 TMP_README.ipynb
-/TMP_DIR/
-
 *TMP_README.html*
 *ipynb_checkpoints/*
-
 .ipynb_checkpoints/
 Customer_value_demo/.ipynb_checkpoints/*

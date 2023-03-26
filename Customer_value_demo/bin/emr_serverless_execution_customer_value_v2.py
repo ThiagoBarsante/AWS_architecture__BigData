@@ -1,31 +1,189 @@
 import sys
-from datetime import datetime
+import os
+import datetime
+
+### Comment 3 lines below  - Sample execution with findspark - Google Colab example or local execution
+# os.environ['SPARK_HOME'] = 'SPARK_HOME_DIRECTORY...spark-3.3.1-bin-hadoop2' 
+# import findspark
+# findspark.init()
+
+## Spark
 from pyspark.sql import SparkSession
+from pyspark.sql.types import FloatType
+
+"""
+This program is designed to run on either EMR Serverless or EMR Cluster and execute a
+PySpark program that calculates customer lifetime value (CLV), runs a machine learning model
+using Spark-SQL, export the results and generates information as an AWS Glue database
+for database marketing purposes. Additionally, it exports a small aggregated report at the end.
+
+To run the program with EMR Cluster, you will need to:
+
+Create an EMR cluster with the necessary configuration and security settings
+Upload the customer transaction data to an S3 bucket
+Submit the PySpark program to the EMR cluster using the spark-submit command or
+convert this code to EMR Notebook with few changes to execute it
+
+To run the program locally with a Parquet file sample, you will need to:
+
+Install PySpark and configure it to work with your local environment and configure
+the variables EMR_SERVERLESS_EXECUTION to False change S3_BUCKET_NAME to local filename
+and finally uncomment findspark code and os.environ['SPARK_HOME'] to run locally or using
+Google Colab as an example
+
+Some details of execution
+
+Preprocess the data and calculate the relevant customer metrics such as
+recency, frequency, and monetary value
+
+Use Spark-SQL to run a machine learning program, such as a clustering algorithm, to segment
+the customers based on their transaction patterns and calculate their CLV scores
+
+Generate a small aggregated report that summarizes the customer segments and their CLV scores
+
+Note: local execution may need to restart Spark and delete folders
+spark-warehouse
+metastore_db
+emr_serverless_demo/ DIR
+
+EMR Cluster version - 6.10
+Spark version - 3.3.1-amzn-0
+
+"""
 
 ### EMR serverless execution
-AWS_EXECUTION = True ## True 
+## Set True or False (EMR Serverless or EMR Cluster)
+EMR_SERVERLESS_EXECUTION = True ## or False for EMR Cluster of local execution
 
-def fnc_validate_parameters(awsExec_v=AWS_EXECUTION):
-    if (len(sys.argv) != 4) and awsExec_v:
+S3_BUCKET_NAME = '../../emr_serverless_demo'
+
+### Setup AWS GLUE
+DBNAME_GLUE = 'DBM' ## database Marketing
+TBP_TABLE_NAME = 'TBP_CUSTOMER_CLV_SERVERLESS' ## Parquet table - Customer Lifetime Value
+SPARK_ML_TABLE = 'TB_ML_SPARK_SDF'
+
+def fnc_print_datetime(msg='Default - msg'):
+    """
+    Function to get current date and time and print a msg
+
+    Parameters
+    ----------
+    msg : TYPE, string
+        DESCRIPTION. The default is 'Default - msg'.
+
+    Returns
+    -------
+    None.
+
+    """
+    dt_format = datetime.datetime.now()
+    formatted_date = dt_format.strftime('%Y-%m-%d %H:%M:%S')
+    print(formatted_date, msg)
+
+def fnc_customer_clv_udf(monetary_value_f, frequency_f, recency_f, discount_f=0.1):
+    """
+    This function implements the customer lifetime value - Spark UDF sample
+    ## ## formula to calculate CLV  using SPARK-udf
+
+    Returns
+    -------
+    CLV
+
+    """
+    clv_formula = round (
+        ( (monetary_value_f / frequency_f) * (1 - ((recency_f + 1) / 365)) / (1 + discount_f) )
+        , 2)
+
+    return clv_formula
+
+def fnc_validate_parameters(aws_emr_serverless_execution=EMR_SERVERLESS_EXECUTION):
+    """
+    This function validate the parameters to be used with EMR Serverless
+
+    Parameters
+    ----------
+    aws_emr_serverless_execution : TYPE: boolean, optional  - EMR Cluster or localhost DEBUG
+        DESCRIPTION. The default is EMR_SERVERLESS_EXECUTION = True.
+
+    Returns
+    -------
+    Input, Output and RPT path passed as parameters or stop the process with an error
+
+    """
+    if (len(sys.argv) != 4) and aws_emr_serverless_execution:
         print("Usage: spark-etl ['input folder'] ['output folder'] ['rpt_folder']")
         sys.exit(-1)
-        
-    # if not(awsExec_v): ## local execution
-    #     sys.argv = ['python-script.py', '../s3_data/input/', '../s3_data/output/', '../s3_data/rpt/']
 
-    input_location = sys.argv[1]
-    output_location = sys.argv[2]
-    rpt_location = sys.argv[3]
+    if not aws_emr_serverless_execution: ## EMR Cluster or local execution
+        input_location_aux = S3_BUCKET_NAME + '/s3_data/input/'
+        output_location_aux = S3_BUCKET_NAME + '/s3_data/output/'
+        rpt_location_aux = S3_BUCKET_NAME + '/s3_data/rpt/'
+    else: # EMR Serverless parameters sample
+        # ['../s3_data/input/', '../s3_data/output/', '../s3_data/rpt/']
+        input_location_aux = sys.argv[1]
+        output_location_aux = sys.argv[2]
+        rpt_location_aux = sys.argv[3]
 
-    return input_location, output_location, rpt_location
+    # ## Debug INFO
+    print('Input location: ', input_location_aux)
+    print('Output location: ', output_location_aux)
+    print('Rpt location: ', rpt_location_aux)
+
+    return input_location_aux, output_location_aux, rpt_location_aux
 
 
+def fshape(dataframe1):
+    """
+    This function print the number of records and columns of a spark dataframe
+
+    Returns
+    -------
+    None.
+
+    """
+    ## Function to print shape of Spark dataframe
+    print('Shape : ', dataframe1.count(), len(dataframe1.columns))
+
+def fnc_show_db_tables():
+    """
+    This function print databases and tables
+
+    Returns
+    -------
+    None.
+
+    """
+    spark.sql( ' SHOW DATABASES ').show()
+    spark.sql(' SHOW TABLES ').show()
+
+
+def spark_sql_write_glue_database(db_name
+                                  , table_name
+                                  , parquet_output_location='glue_output_location_tmp'
+                                  , temp_table ='SPARK_ML_TABLE_tmp'):
+    """
+    This function create the Database Marketing and the customer CLV table in AWS GLUE
+
+    Returns
+    -------
+    None.
+
+    """
+
+    ## Function to CREATE DATABASE and TABLE - AWS Glue
+    print(' database creation: ', db_name)
+    spark.sql(f" CREATE database if not exists {db_name} ")
+    print()
+    print(' Table name creation , ', table_name)
+    spark.sql((
+        f" CREATE TABLE IF NOT EXISTS {db_name}.{table_name} "
+        f" USING PARQUET LOCATION '{parquet_output_location}' AS SELECT * FROM {temp_table}"
+    ))
+
+## Main Program
+fnc_print_datetime(msg=' - Program started  ... ')
 (input_location, output_location, rpt_location) = fnc_validate_parameters()
 
-
-# print('Input location: ', input_location)
-# print('Output location: ', output_location)
-# print('Rpt location: ', rpt_location)
 
 spark = SparkSession\
     .builder\
@@ -33,45 +191,20 @@ spark = SparkSession\
     .enableHiveSupport()\
     .getOrCreate()
 
-def fshape(dataframe1):
-    print('Shape : ', dataframe1.count(), len(dataframe1.columns))
-
-
-dbname = 'DBM' ## database Marketing
-tablename = 'TBP_CUSTOMER_CLV_SERVERLESS' ## Parquet table - Customer Lifetime Value
-spark_ml_table = 'TB_ML_SPARK_SDF'
-
-
-def fnc_show_db_tables():
-    spark.sql( ' SHOW DATABASES ').show()
-    spark.sql(' SHOW TABLES ').show()
-
-
-def spark_sql_write_glue_database(db_name, table_name, parquet_output_location=output_location, temp_table=spark_ml_table):
-    print(' database creation: ', db_name)
-    spark.sql(f" CREATE database if not exists {db_name} ")
-    print(' table name creation , ', table_name)
-    spark.sql((
-        f" CREATE TABLE IF NOT EXISTS {db_name}.{table_name} "
-        f" USING PARQUET LOCATION '{parquet_output_location}' AS SELECT * FROM {temp_table}"
-    ))
-
 
 ## read local file
 sdf = spark.read.parquet(input_location)
 
 ## ETL
 sdf.createOrReplaceTempView('TB_SALES_SDF')
-# spark.sql('select max(TO_DATE(InvoiceDate)) as current_date_for_FRMV_CLV, current_date as not_today from TB_SALES_SDF').show()
+# spark.sql("""
+#    select max(TO_DATE(InvoiceDate)) as current_date_for_FRMV_CLV,
+#        current_date as not_today
+#    from TB_SALES_SDF'
+# """).show()
 
-
-## formula to calculate CLV 
-def fnc_customer_clv_udf(monetary_value_f, frequency_f, recency_f, discount_f=0.1):
-    return round ( ( (monetary_value_f / frequency_f) * (1 - ((recency_f + 1) / 365)) / (1 + discount_f) ) , 2)
 
 ## Register the formula to be used by Spark-SQL
-from pyspark.sql.types import FloatType
-
 spark.udf.register('fnc_customer_clv_udf', fnc_customer_clv_udf, FloatType())
 
 ## Apply some filters and create the main customer purchase history as an example
@@ -111,13 +244,19 @@ ORDER BY monetary_value DESC
 """
 
 sdf_clv = spark.sql(sql_query_clv)
-sdf_clv.createOrReplaceTempView(spark_ml_table)
+sdf_clv.createOrReplaceTempView(SPARK_ML_TABLE)
 
 
 def ml_sql_prediction():
+    """
+    This Build cluster of Customers based on SQL statemeent
+
+    Returns: SQL to be executed with Spark dataframe
+    """
+
     text_sql_ml2 = f"""
     SELECT 
-        {spark_ml_table}.*,
+        {SPARK_ML_TABLE}.*,
 		( CASE
 		WHEN ( ( ( `frequency`  > 1.0e1 AND `frequency`  <= 1.14e2 ) ) ) THEN 9
 		WHEN ( ((abs(year(`dt_first_Invoice`) - 2.01e3) <= 10e-9) OR ( (`dt_first_Invoice` IS NULL ) ) ) AND ((abs(`frequency` - 1.0e0) <= 10e-9) OR (abs(`frequency` - 2.0e0) <= 10e-9) OR (abs(`frequency` - 3.0e0) <= 10e-9) OR (abs(`frequency` - 4.0e0) <= 10e-9) OR (abs(`frequency` - 5.0e0) <= 10e-9) OR (abs(`frequency` - 6.0e0) <= 10e-9) OR ( (`frequency` IS NULL ) ) ) AND ( ( (datediff(concat(year(`dt_last_Invoice`),'-',month(`dt_last_Invoice`),'-',day(`dt_last_Invoice`)),concat(year(`dt_last_Invoice`),'-01-01')) + 1)  >= 4.0e0 AND (datediff(concat(year(`dt_last_Invoice`),'-',month(`dt_last_Invoice`),'-',day(`dt_last_Invoice`)),concat(year(`dt_last_Invoice`),'-01-01')) + 1)  <= 3.4e2 ) OR ( (`dt_last_Invoice` IS NULL ) ) ) ) THEN 1
@@ -131,19 +270,21 @@ def ml_sql_prediction():
 		WHEN ( ( ( (datediff(concat(year(`dt_last_Invoice`),'-',month(`dt_last_Invoice`),'-',day(`dt_last_Invoice`)),concat(year(`dt_last_Invoice`),'-01-01')) + 1)  >= 4.0e0 AND (datediff(concat(year(`dt_last_Invoice`),'-',month(`dt_last_Invoice`),'-',day(`dt_last_Invoice`)),concat(year(`dt_last_Invoice`),'-01-01')) + 1)  <= 3.19e2 ) OR ( (`dt_last_Invoice` IS NULL ) ) ) AND ( ( `CLV_SQL`  >= -2.3859999999999999e1 AND `CLV_SQL`  <= 3.8501999999999998e2 ) OR ( (`CLV_SQL` IS NULL ) ) ) AND ((abs(year(`dt_first_Invoice`) - 2.011e3) <= 10e-9) ) ) THEN 4
 		ELSE 11
 		END ) AS kc_monetary_value
-    FROM {spark_ml_table}
+    FROM {SPARK_ML_TABLE}
 """
     return text_sql_ml2
 
 
+## Generate customer CLV with ML - cluster of customers
 sdf_ml = spark.sql(ml_sql_prediction())
 s3_export_file = output_location
-sdf_ml.write.mode('overwrite').parquet(s3_export_file+'Customer_CLV.parquet')
+spark_ml_customer_str = s3_export_file+'Customer_CLV.parquet'
+sdf_ml.createOrReplaceTempView('TB_CLV_SDF_ML')
+sdf_ml.write.mode('overwrite').parquet(spark_ml_customer_str)
+
 
 
 ## Summary report
-sdf_ml.createOrReplaceTempView('TB_CLV_SDF_ML')
-
 ml_rpt_sql = """
 WITH TB_CLUSTER AS 
 (
@@ -164,10 +305,30 @@ FROM TB_CLUSTER tb1
 order by avg_clv desc
 """
 
-sdf_ml_rpt = spark.sql(ml_rpt_sql) 
+sdf_ml_rpt = spark.sql(ml_rpt_sql)
 
 ## Export as parquet file
 sdf_ml_rpt.write.mode('overwrite').parquet(rpt_location+'RPT_Customer_CLV.parquet')
 
+## AWS Glue DATABASE AND TABLE GENERATION
+### RESTORE COMMENT
+spark_ml_customer_str = s3_export_file+'Customer_CLV.parquet'
+spark_sql_write_glue_database(db_name=DBNAME_GLUE,
+                              table_name=TBP_TABLE_NAME,
+                                  ## original without cluster SPARK_ML_TABLE_tmp
+                              temp_table = 'TB_CLV_SDF_ML',
+                              parquet_output_location=spark_ml_customer_str)
 
-# ### Done
+# ## Evaluate all results - debug - result execution sample
+# spark.sql(f"USE DATABASE {DBNAME_GLUE}" )
+# fnc_show_db_tables()
+# spark.sql(f" DESC TABLE {DBNAME_GLUE}.{TBP_TABLE_NAME} ").show()
+# ## Detailed description
+# # spark.sql(f" DESC EXTENDED {DBNAME_GLUE}.{TBP_TABLE_NAME} ").show()
+# print(spark_ml_customer_str)
+# sdf_tmp_parquet = spark.read.parquet(spark_ml_customer_str)
+# sdf_tmp_parquet.printSchema()
+
+print(' : ', )
+fnc_print_datetime(msg=' - End of execution. ')
+## Done
