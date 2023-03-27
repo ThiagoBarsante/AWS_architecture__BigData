@@ -19,7 +19,7 @@ Using these three factors (FRM), businesses can segment their customers into gro
 #### AWS Architecture
 ![imgAws-arch](./img/aws-services.png)
 
-<b> Here's an example of how to implement the FRM using in Spark - PySpark with customer purchase history </b> 
+<b> Here's an example of how to implement Customer value using FRM with Spark-PySpark and customer purchase history </b> 
 [Click here to open EMR serverless_python_script](./bin/emr_serverless_execution_customer_value_v2.py)
 
 - Spark could run this solution with millions of customers and billions of revenue transactions, for companies such as Amazon, Wall Wart and Alibaba without code change
