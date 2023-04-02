@@ -56,6 +56,13 @@ After all process executed the results are
 
 ![imgRency](./img/Recency-comment-img.png)
 
+### Machine Learning model
+<b> Machine Learning model to build clusters of customers associated with the FRM solution </b> can also provide insights for sales and marketing optimizations campaigns. 
+- ML model with prediction confidence of 95.8%
+
+
+![imgAws4](./img/ML_Cluster_Model-img.png)
+
 ###### Percent distribution, CLV vs Monetary Value
 
 ![imgAws2](./img/Percent-distribution-AVG-img.png)
@@ -63,16 +70,16 @@ After all process executed the results are
 
 ![imgAws3](./img/CLV_MV-img.png)
 
-### Quick Note
-<b> Machine Learning model to build clusters of customers associated with the FRM solution </b> can also provide insights for sales and marketing optimizations campaigns. 
-- ML model with prediction confidence of 95.8%
-
-
-![imgAws4](./img/ML_Cluster_Model-img.png)
-
 
 ### Agenda em project solution
+- Click here to open the [Project Solution](./doc/Customer_value_demo_AWS_architecture__project_solution.pdf) doc
+
 ![clv_1_Agenda-Customer-value](./img/clv_1_Agenda-Customer-value.png)
+
+#### Customer value Dashboard and reports
+- Click here to open one example of [Customer value dashboard and report](./doc/Customer_value_demo_Dashboard_and_Report.pdf)
+
+![Customer value dashboard and report sample](./img/Customer-value-Dashboard-and-repport.png)
 
 ###### Notes
 - All code and documents are available under bin/, HTML viewer and doc/ directories 

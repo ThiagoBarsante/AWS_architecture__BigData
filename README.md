@@ -12,9 +12,11 @@ The evolution of <b> decision support systems (DSS) </b>  has been largely shape
 All the pieces together, these advancements enable the organizations and relevant stakeholders to respond rapidly to changing market conditions and make data-driven, informed decisions.
 
 ### AWS Architecture example to process Big Data
+- Below, the AWS architecture also presents the workflow for processing data ingestion (batch or stream), data pipeline (ETL/ELT and data warehousing), business intelligence, and advanced analytics with machine learning
+
 ![imgAws](./doc/img/Aws-architecture_BigData-v2.png)
 
-- Some notes of AWS tools and services
+- Amazon Web Services - AWS service descriptions
 
 #### AWS S3 (Simple Storage Service)
 AWS S3 (Simple Storage Service) is a scalable, secure, and durable object storage service that can be used as a data lake to store and retrieve large volumes of data. In a decision support system architecture, AWS S3 is often used as a central storage repository for raw data, which can then be accessed and analyzed by other services such as EMR, Athena, or Redshift.
