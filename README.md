@@ -12,7 +12,7 @@ The evolution of <b> decision support systems (DSS) </b>  has been largely shape
 All the pieces together, these advancements enable the organizations and relevant stakeholders to respond rapidly to changing market conditions and make data-driven, informed decisions.
 
 ### AWS Architecture example to process Big Data
-- Below, the AWS architecture also presents the workflow for processing data ingestion (batch or stream), data pipeline (ETL/ELT and data warehousing), business intelligence, and advanced analytics with machine learning
+- Below, the AWS architecture also presents the workflow for processing data ingestion (batch or stream), data pipeline (ETL/ELT and data warehousing), advanced analytics with machine learning and business intelligence.
 
 ![imgAws](./doc/img/Aws-architecture_BigData-v2.png)
 

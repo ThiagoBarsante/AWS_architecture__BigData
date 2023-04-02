@@ -77,7 +77,8 @@ After all process executed the results are
 ![clv_1_Agenda-Customer-value](./img/clv_1_Agenda-Customer-value.png)
 
 #### Customer value Dashboard and reports
-- Click here to open one example of [Customer value dashboard and report](./doc/Customer_value_demo_Dashboard_and_Report.pdf)
+
+- Click here to open one example of [Customer value dashboard and report](./doc/Customer_value_demo_Dashboard_and_Report.pdf), which showcases the result of data pipeline process, advanced analytics with machine learning, and business intelligence. This example provides insights into how these techniques can be used to improve customer value and drive business success.
 
 ![Customer value dashboard and report sample](./img/Customer-value-Dashboard-and-repport.png)
 
